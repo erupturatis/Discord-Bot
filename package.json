@@ -4,6 +4,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2"
   },
+  "type": "module",
   "name": "discordbot",
   "description": "stupid discord bot",
   "version": "1.0.0",
