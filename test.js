@@ -1,3 +1,5 @@
-import {adder} from './Utils/functionality.js';
-
-adder(3,6);
+const car = {
+  type:"Fiat", 
+  model:"500", 
+  color:"white"
+}
