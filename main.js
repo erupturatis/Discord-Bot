@@ -22,18 +22,32 @@ client.once(Events.ClientReady, c => {
 
 async function manageScraping(root){
     let names = await getNamesForDistance(root, 0, 1);
-    console.log(names);
-    console.log("here");
+    names = names.slice(0,5);
+    names = names.map( val => {
+        return val.link + ", \n";
+    })
+    console.log("finished names getting");
+    //console.log(names);
+    let finalMessage = "";
+    finalMessage = finalMessage.concat(...names);
+    return finalMessage;
 }
 
 
-client.addListener(Events.MessageCreate, msg =>{
+client.addListener(Events.MessageCreate,async msg =>{
+    //extracting useful data
     let content = msg.content;
     let user = msg.author.username;
     let isBot =  msg.author.bot;
-    
-    if (content == 'wiki'){
-        msg.reply("merge");
+    let channel = msg.channel;
+
+    if (content.slice(0,4) == 'wiki'){
+        content = content.slice(5);
+        const newMessage = await msg.channel.send("Processing");
+
+        let finalMessage = await manageScraping(`${content}`);
+        console.log(finalMessage);
+        await newMessage.edit(finalMessage);
     }
 })
 

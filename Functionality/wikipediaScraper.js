@@ -36,14 +36,27 @@ async function start(wikiPage, page) {
 }
 
 async function getNamesForDistance(name, distance, maxDistance){
+  
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto("https://www.wikipedia.org/");
   await page.type("#searchInput", name);
   await page.keyboard.press('Enter');
   await page.waitForNavigation();
-  await page.waitForNavigation();
+
+  console.log("aici");
   let url = await page.url();
+  console.log("names distance");
+  if (url.includes("Special:")){
+    await browser.close();
+    console.log("returned error");
+    return [{text: "error", link:`term not found`}];
+  }
+  console.log("continued1");
+  await page.waitForNavigation({ timeout: 100});
+  
+  console.log("continued2");
+  
 
   let arr = [{text: name, link:`${url}`}]
   let allNames = arr
