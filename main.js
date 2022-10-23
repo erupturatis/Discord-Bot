@@ -3,6 +3,8 @@ const require = createRequire(import.meta.url);
 
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 require('dotenv').config()
+import {getNamesForDistance} from './Functionality/wikipediaScraper.js'
+    
 
 const client = new Client({ intents: [
     GatewayIntentBits.Guilds, 
@@ -18,13 +20,21 @@ client.once(Events.ClientReady, c => {
     console.log(client.user);
 });
 
+async function manageScraping(root){
+    let names = await getNamesForDistance(root, 0, 1);
+    console.log(names);
+    console.log("here");
+}
 
 
 client.addListener(Events.MessageCreate, msg =>{
     let content = msg.content;
     let user = msg.author.username;
     let isBot =  msg.author.bot;
-    //msg.reply("merge");
+    
+    if (content == 'wiki'){
+        msg.reply("merge");
+    }
 })
 
 client.login(process.env.TOKEN)

@@ -35,9 +35,17 @@ async function start(wikiPage, page) {
   return names;
 }
 
-async function getNamesForDistance(arr, distance, maxDistance){
+async function getNamesForDistance(name, distance, maxDistance){
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  await page.goto("https://www.wikipedia.org/");
+  await page.type("#searchInput", name);
+  await page.keyboard.press('Enter');
+  await page.waitForNavigation();
+  await page.waitForNavigation();
+  let url = await page.url();
+
+  let arr = [{text: name, link:`${url}`}]
   let allNames = arr
 
   let iter = 0;
@@ -64,7 +72,6 @@ function writeNames(names){
   names = names.map((elem) => JSON.stringify(elem))
   fs.writeFile('names.txt', names.join('\r\n'))
 }
-
 export {getNamesForDistance};
 
 
