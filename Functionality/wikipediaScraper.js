@@ -4,12 +4,7 @@ const require = createRequire(import.meta.url);
 const puppeteer = require("puppeteer");
 const fs = require('fs/promises')
 
-let arr = []
-
-const browser = await puppeteer.launch();
-const page = await browser.newPage();
-
-async function start(wikiPage) {
+async function start(wikiPage, page) {
   
   await page.goto(wikiPage);
   
@@ -41,25 +36,35 @@ async function start(wikiPage) {
 }
 
 async function getNamesForDistance(arr, distance, maxDistance){
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
   let allNames = arr
-  console.log(distance);
+
   let iter = 0;
+
   for(const element of arr){
     console.log(`${iter}`);
     iter+=1;
-    let names = await start(element.link);
+    let names = await start(element.link, page);
     allNames = allNames.concat(names);
   }
   
   if(distance < maxDistance-1){
     return await getNamesForDistance(allNames, distance + 1, maxDistance);
   }else{
+    await browser.close();
     return allNames;
   }
+  
 }
-let initialArr = [{text:"hitler",link: "https://en.wikipedia.org/wiki/Adolf_Hitler"}]
-let names = await getNamesForDistance(initialArr, 0, 1);
 
-names = names.map((elem) => JSON.stringify(elem))
-fs.writeFile('names.txt', names.join('\r\n'))
-await browser.close();
+// let initialArr = [{text:"hitler",link: "https://en.wikipedia.org/wiki/Adolf_Hitler"}]
+// let names = await getNamesForDistance(initialArr, 0, 2);
+function writeNames(names){
+  names = names.map((elem) => JSON.stringify(elem))
+  fs.writeFile('names.txt', names.join('\r\n'))
+}
+
+export {getNamesForDistance};
+
+
