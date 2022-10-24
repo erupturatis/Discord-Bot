@@ -31,7 +31,6 @@ async function start(wikiPage, page) {
     }).filter(text => text !== '')
     // the bot also returns some hidden links on the page
   })
-
   return names;
 }
 
@@ -44,19 +43,12 @@ async function getNamesForDistance(name, distance, maxDistance){
   await page.keyboard.press('Enter');
   await page.waitForNavigation();
 
-  console.log("aici");
   let url = await page.url();
-  console.log("names distance");
   if (url.includes("Special:")){
     await browser.close();
-    console.log("returned error");
     return [{text: "error", link:`term not found`}];
   }
-  console.log("continued1");
   await page.waitForNavigation({ timeout: 100});
-  
-  console.log("continued2");
-  
 
   let arr = [{text: name, link:`${url}`}]
   let allNames = arr
@@ -76,11 +68,8 @@ async function getNamesForDistance(name, distance, maxDistance){
     await browser.close();
     return allNames;
   }
-  
 }
 
-// let initialArr = [{text:"hitler",link: "https://en.wikipedia.org/wiki/Adolf_Hitler"}]
-// let names = await getNamesForDistance(initialArr, 0, 2);
 function writeNames(names){
   names = names.map((elem) => JSON.stringify(elem))
   fs.writeFile('names.txt', names.join('\r\n'))

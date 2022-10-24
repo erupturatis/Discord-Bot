@@ -5,7 +5,6 @@ const { Client, Events, GatewayIntentBits } = require('discord.js');
 require('dotenv').config()
 import {getNamesForDistance} from './Functionality/wikipediaScraper.js'
     
-
 const client = new Client({ intents: [
     GatewayIntentBits.Guilds, 
     GatewayIntentBits.MessageContent,
@@ -32,7 +31,6 @@ async function manageScraping(root){
     finalMessage = finalMessage.concat(...names);
     return finalMessage;
 }
-
 
 client.addListener(Events.MessageCreate,async msg =>{
     //extracting useful data
