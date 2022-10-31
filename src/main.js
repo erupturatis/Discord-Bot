@@ -22,7 +22,7 @@ client.once(Events.ClientReady, (c) => {
 
 async function manageScraping(root) {
   let names = await getNamesForDistance(root, 0, 1);
-  //names = names.slice(0, 5);
+  names = names.slice(0, 20);
   names = names.map((val) => {
     return val.link + ", \n";
   });
