@@ -19,3 +19,8 @@ from the page found. For example writing:
   wiki randomWordThatDoesntHaveAWikiPage
 ```
 ![](https://media.discordapp.net/attachments/864542134391275543/1039258928791429202/image.png)
+
+# You can host the bot from here
+```
+docker pull erupturatis/node-bot:1.0.0
+```
