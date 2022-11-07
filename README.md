@@ -20,7 +20,7 @@ from the page found. For example writing:
 ```
 ![](https://media.discordapp.net/attachments/864542134391275543/1039258928791429202/image.png)
 
-# You can host the bot from here
+# The docker image I used to host and test it
 ```
 docker pull erupturatis/node-bot:1.0.0
 ```
